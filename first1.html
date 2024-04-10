@@ -1,0 +1,62 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+</head>
+<body>
+    <input type="file" id="fileInput" />
+    <ul id="fileList"></ul>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            var files = e.target.files;
+            var fileList = document.getElementById('fileList');
+            
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var li = document.createElement('li');
+                li.textContent = file.name;
+                fileList.appendChild(li);
+
+                // Code pour lire le fichier Excel
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var data = new Uint8Array(e.target.result);
+                    var workbook = XLSX.read(data, { type: 'array' });
+
+                    // Utilisez 'workbook' pour accéder aux données Excel si nécessaire
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        });
+        function ajouterFichierListe(nomFichier) {
+            var listeFichiers = document.getElementById('listeFichiers');
+            var listItem = document.createElement('li');
+            listItem.textContent = nomFichier;
+
+            // Ajouter un bouton pour supprimer le fichier
+            var boutonSupprimer = document.createElement('button');
+            boutonSupprimer.textContent = 'Supprimer';
+            boutonSupprimer.addEventListener('click', function() {
+                // Supprimer le fichier et l'élément de la liste
+                listItem.remove();
+                // Envoyer une requête au serveur pour supprimer le fichier
+                // Ajouter ici le code pour la suppression côté serveur
+            });
+            listItem.appendChild(boutonSupprimer);
+
+            // Ajouter un bouton pour modifier le fichier
+            var boutonModifier = document.createElement('button');
+            boutonModifier.textContent = 'Modifier';
+            boutonModifier.addEventListener('click', function() {
+                // Ajouter ici le code pour la modification
+                alert("Fonctionnalité de modification à implémenter.");
+            });
+            listItem.appendChild(boutonModifier);
+
+            listeFichiers.appendChild(listItem);
+        }
+    
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+p{
+    display: none;
+}
+@media print{
+    header >*{
+        display: none;
+        visibility: hidden;
+        margin-bottom: -100%;
+        box-shadow: none;
+    }
+    .btn-toolbar{
+        display: none;
+    }
+    p{
+        display: inline;
+    }
+    p span{
+        font-weight: bold;
+    }
+}
