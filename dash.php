@@ -63,51 +63,14 @@
 <script>
     function importationSimple() {
         // Redirection vers la page interface.php
-        window.location.href = 'interface.php';
+        window.location.href = 'nouveau.php';
     }
 
     function importationAvancee() {
         // Redirection vers la page interface2.php
         window.location.href = 'interface2.php';
     }
-    // Ouvrir la boîte de dialogue modale
-function openModal() {
-  document.getElementById('myModal').style.display = "block";
-}
-
-// Fermer la boîte de dialogue modale
-function closeModal() {
-  document.getElementById('myModal').style.display = "none";
-}
-
-// Fonction pour importer le fichier
-function importFile() {
-  var fileInput = document.getElementById('fileInput');
-  var file = fileInput.files[0];
-  
-  if (file) {
-    // Ici, vous pouvez envoyer le fichier au serveur pour l'importer dans la base de données en utilisant AJAX ou un formulaire HTML
-    // Par exemple, avec AJAX :
-    var formData = new FormData();
-    formData.append('file', file);
-    
-    fetch('upload.php', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-      // Traiter la réponse du serveur
-      console.log(data);
-    })
-    .catch(error => {
-      console.error('Erreur :', error);
-    });
-  } else {
-    alert("Veuillez sélectionner un fichier.");
-  }
-}
-
+   
     
 
     
@@ -248,54 +211,95 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
                     echo "<button style='color: blue;'>
         </section>
     </div> ---->
-    <button onclick="openModal()">Importer un fichier</button>
+   <!-- Ajoutez une ligne vide à la fin du tableau pour l'ajout d'un étudiant -->
+<!--<tr id="newRow">
+    <td></td>
+    <td><input type="text" id="newMatricule" name="newMatricule"></td>
+    <td><input type="text" id="newNom" name="newNom"></td>
+    <td><input type="number" id="newCC" name="newCC" min="0" max="20"></td>
+    //<
+        <td><input type="number" id="newTP" name="newTP" min="0" max="40"></td>
+    //
+    <td><input type="number" id="newEE" name="newEE" min="0" max="40"></td>
+</tr> --->
+<button type="button" class="btn btn-success" id="addStudent">Ajouter un étudiant</button>
 
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <h2>Importation de fichier</h2>
-    <input type="file" id="fileInput">
-    <button onclick="importFile()">Importer</button>
-  </div>
-</div>
-<style>
-  .modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.4);
-}
+<script>
+    document.getElementById('addStudent').addEventListener('click', function() {
+        // Créez une nouvelle ligne
+        var newRow = document.createElement('tr');
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
+        // Ajoutez les cellules pour les différentes colonnes
+        newRow.innerHTML = 
+        `
+            <td><input type="number" name="#[]"></td>
+            <td><input type="text" name="matricule[]"></td>
+            <td><input type="text" name="nom[]"></td>
+            <td><input type="number" name="cc[]"></td>
+            <td><input type="number" name="tp[]"></td>
+            <td><input type="number" name="ee[]"></td>
+            `;
 
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-.button{
-  color:green;
-  text-align:center;
-}
-.close:hover,
-.close:focus {
-  color: blue;
-  text-decoration: none;
-  cursor: pointer;
-}
-</style>
+        // Ajoutez la nouvelle ligne à la fin du tableau
+        document.getElementById('list').appendChild(newRow);
+    });
+</script>
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $matricules = $_POST['matricule'];
+    $noms = $_POST['nom'];
+    $ccs = $_POST['cc'];
+    $tps = $_POST['tp'];
+    $ees = $_POST['ee'];
+
+    //if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // $matricules = $_POST['matricule'];
+        // $noms = $_POST['nom'];
+        // $ccs = $_POST['cc'];
+        // $tps = $_POST['tp'];
+        // $ees = $_POST['ee'];
+    
+        // Assurez-vous que les tableaux ont la même taille
+        if (count($matricules) === count($noms) && count($matricules) === count($ccs) && count($matricules) === count($tps) && count($matricules) === count($ees)) {
+            // Bouclez sur les tableaux pour insérer chaque étudiant dans la base de données
+            for ($i = 0; $i < count($matricules); $i++) {
+                // Récupérez les valeurs et nettoyez-les si nécessaire
+                $matricule = $matricules[$i];
+                $nom = $noms[$i];
+                $cc = $ccs[$i];
+                $tp = $tps[$i];
+                $ee = $ees[$i];
+    
+                // Exécutez la requête SQL INSERT
+                $insertQuery = $connexion->prepare("INSERT INTO uejoinetudiant FROM soutenance (matricule, nom, cc, tp, ee) VALUES (?, ?, ?, ?, ?)");
+                die(gg);
+                $insertQuery->execute([$matricule, $nom, $cc, $tp, $ee]);
+    
+                // Vérifiez si l'insertion a réussi
+                if ($insertQuery) {
+                    echo "L'étudiant $nom avec le matricule $matricule a été ajouté avec succès à la base de données de soutenance.<br>";
+                } else {
+                    echo "Erreur lors de l'ajout de l'étudiant $nom avec le matricule $matricule à la base de données de soutenance.<br>";
+                }
+            }
+        } else {
+            echo "Les tableaux de données ne sont pas de même taille.";
+        }
+    }
+    
+
+    // Insérez les nouveaux étudiants dans la base de données
+    //for ($i = 0; $i < count($matricules); $i++) {
+        // Utilisez les valeurs de $matricules[$i], $noms[$i], $ccs[$i], $tps[$i], $ees[$i] pour insérer les données dans la base de données
+        // Assurez-vous de sécuriser vos requêtes SQL contre les injections SQL
+    //}
+
+    // Affichez un message pour confirmer l'ajout des étudiants
+   // echo "Les nouveaux étudiants ont été ajoutés avec succès.";
+//}
+?>
+
+
 </tbody>
 
 

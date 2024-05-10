@@ -5,7 +5,7 @@
         if (count($resultat) > 0) {
             $_SESSION['id']=$resultat[0][0];
             $_SESSION['name']=$username;
-            header('Location:dash.php');
+            header('Location:accueil_admin.php');
         }
         else{
             echo "<br><br><p style='color:red;'>Veuillez verifier vos entrées.</p>";
@@ -13,7 +13,7 @@
     }
 
     //afficher ue
-    function printUe($resultat){
+    function printDepartement($resultat){
         for ($i=0; $i < count($resultat); $i++) { 
             echo "<li class='nav-item'>
                     <form action='' method='post'>

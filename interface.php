@@ -33,11 +33,11 @@
             var formData = new FormData();
             formData.append('fichier_excel', fichier);
 
-            fetch('import.js', {
+            fetch('nouveau.php', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => composer.json())
             .then(data => {
                 if (data.success) {
                     // Ajouter le fichier à la liste des fichiers importés
@@ -52,7 +52,7 @@
             });
         }
 
-        function ajouterFichierListe(nomFichier) {
+        //function ajouterFichierListe(nomFichier) {
             var listeFichiers = document.getElementById('listeFichiers');
             var listItem = document.createElement('li');
             listItem.textContent = nomFichier;

@@ -3,10 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Welcome to Y School</title>
+	<title>Bienvenue sur CampusImport</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/page_acc.css">
-	<link rel="icon" href="univ.png">
+	<link rel="icon" href="img/univ.jpg">
 </head>
 <body class="body-home">
     <div class="black-fill"><br /> <br />
@@ -15,7 +15,7 @@
     	     id="homeNav">
 		  <div class="container-fluid">
 		    <a class="navbar-brand" href="#">
-		    	<img src="univ.png" width="40">
+		    	<img src="univ.jpg" width="40">
 		    </a>
 		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		      <span class="navbar-toggler-icon"></span>
@@ -34,6 +34,9 @@
 		      </ul>
 		      <ul class="navbar-nav me-right mb-2 mb-lg-0">
 		      	<li class="nav-item">
+				  <button onclick="window.location.href='index.php?type=enseignant'">Connexion Enseignant</button>
+                <button onclick="window.location.href='admin.php?type=admin'">Connexion Administrateur</button>
+
 		          <a class="nav-link" href="index.php">Login</a>
 		        </li>
 		      </ul>
@@ -41,7 +44,7 @@
 		    </div>
 		</nav>
         <section class="welcome-text d-flex justify-content-center align-items-center flex-column">
-        	<img src="univ.png" >
+        	<img src="univ.jpg" >
         	<h4>Welcome to CampusImport</h4>
         	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         </section>
@@ -50,7 +53,7 @@
         	<div class="card mb-3 card-1">
 			  <div class="row g-0">
 			    <div class="col-md-4">
-			      <img src="logo.png" class="img-fluid rounded-start" >
+			      <img src="univ.jpg" class="img-fluid rounded-start" >
 			    </div>
 			    <div class="col-md-8">
 			      <div class="card-body">
